@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "./InputForm.css";
 import { InputFormProps } from "../utlis/utils";
+import {Information} from "../constants/constants"
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
@@ -15,7 +16,7 @@ const SignupSchema = Yup.object().shape({
 const InputForm: React.FC<InputFormProps> = ({ isStatus, setItemData }) => {
   return (
     <div className="form-container">
-      <h1>Add Todo!</h1>
+      <h1>{Information.formHeading}</h1>
       <Formik
         initialValues={{
           name: "",
@@ -32,7 +33,7 @@ const InputForm: React.FC<InputFormProps> = ({ isStatus, setItemData }) => {
           <Form>
             <div className="form-group">
               <label htmlFor="name" className="label">
-                Title:
+                {Information.inputLabel.Title}:
               </label>
               <Field type="text" name="name" className="form-input" />
               <ErrorMessage
@@ -44,7 +45,7 @@ const InputForm: React.FC<InputFormProps> = ({ isStatus, setItemData }) => {
             </div>
             <div className="form-group">
               <label htmlFor="desc" className="label">
-                Description:
+                {Information.inputLabel.Description}:
               </label>
               <Field type="text" name="desc" className="form-input" />
               {/* <ErrorMessage name="desc" component="span" className="error-message" /> */}
@@ -53,7 +54,7 @@ const InputForm: React.FC<InputFormProps> = ({ isStatus, setItemData }) => {
               ) : null}
             </div>
             <button type="submit" className="submit-button">
-              Add
+              {Information.inputLabel.submitBtn}
             </button>
           </Form>
         )}

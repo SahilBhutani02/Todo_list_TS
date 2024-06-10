@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import "./Table.css";
 import { ItemProps, TableProps } from "../utlis/utils";
+import {Information} from "../constants/constants"
 
 const Table: React.FC<TableProps> = ({
   itemData,
@@ -16,7 +17,6 @@ const Table: React.FC<TableProps> = ({
   }, [itemData, setItemData]);
 
   useEffect(() => {
-
     const debounce = setTimeout(() => {
       if (searchValue) {
         handleFilter(searchValue);
@@ -28,6 +28,8 @@ const Table: React.FC<TableProps> = ({
     return () => clearTimeout(debounce);
   }, [searchValue, itemData]);
 
+
+  // search the value from the table
   const handleFilter = (search: string) => {
     const filteredRecords = itemData.filter((row) =>
       row.name.toLowerCase().includes(search.toLowerCase())
@@ -35,16 +37,20 @@ const Table: React.FC<TableProps> = ({
     setFilteredData(filteredRecords);
   };
 
+
+// reset the value to the initial data
   const handleReset = () => {
     setItemData(itemData);
     setSearchValue("");
   };
 
+  // delete the particular item from the table
   const deleteItem = (row: ItemProps) => {
     const updatedData = itemData.filter((item) => item !== row);
     setItemData(updatedData);
   };
 
+  // add a checkbox in the table cell
   const customizedCell = (row: ItemProps) => {
     return (
       <input
@@ -55,6 +61,7 @@ const Table: React.FC<TableProps> = ({
     );
   };
 
+  // check that the task is completed or not 
   const handleCheck = (
     e: React.ChangeEvent<HTMLInputElement>,
     row: ItemProps
@@ -71,6 +78,7 @@ const Table: React.FC<TableProps> = ({
     }
   };
 
+  // create columns in the table
   const columns: TableColumn<ItemProps>[] = [
     {
       name: "",
@@ -93,12 +101,14 @@ const Table: React.FC<TableProps> = ({
       name: "Action",
       cell: (row) => (
         <button onClick={() => deleteItem(row)} className="delete-btn">
-          Delete
+          {Information.deleteBtn}
         </button>
       ),
     },
   ];
 
+
+// add styling to the row after the task is completed
   const conditionalRowStyles = [
     {
       when: (row: ItemProps) => row.status,
@@ -110,7 +120,7 @@ const Table: React.FC<TableProps> = ({
 
   return (
     <div className="table-container">
-      <h1>Todo List</h1>
+      <h1>{Information.tableHeading}</h1>
       {itemData.length > 0 && (
         <div className="table-input">
           <input
@@ -120,7 +130,7 @@ const Table: React.FC<TableProps> = ({
             onChange={(e) => setSearchValue(e.target.value)}
           />
           <button onClick={handleReset} className="reset-btn">
-            Reset
+            {Information.resetBtn}
           </button>
         </div>
       )}
